@@ -1,4 +1,4 @@
-"""py2app build for PixProGrid.app — v1.3.3
+"""py2app build for PixProGrid.app — v1.4.0
 
     ./venv/bin/python setup.py py2app
     cp -R dist/PixProGrid.app /Applications/
@@ -24,8 +24,8 @@ OPTIONS = {
         "CFBundleName": "PixProGrid",
         "CFBundleDisplayName": "PixProGrid",
         "CFBundleIdentifier": "com.timmccoy.pixprogrid",
-        "CFBundleShortVersionString": "1.3.3",
-        "CFBundleVersion": "1.3.3",
+        "CFBundleShortVersionString": "1.4.0",
+        "CFBundleVersion": "1.4.0",
         "LSMinimumSystemVersion": "13.0",
         "NSHighResolutionCapable": True,
         # A floating utility panel, not an app to switch to: no Dock icon and

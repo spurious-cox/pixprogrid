@@ -384,7 +384,7 @@ v1.3.2  (2026-08-10)
     depends on no external path. Packaging only; no code changed.
 
 
-v1.3.3  (2026-09-13)  — current
+v1.3.3  (2026-09-13)
     Documentation release; no change to the effect. Adds a HOW TO USE IT
     section — numbered steps from selecting the layer, through every dialog
     field and its units, to what the result group contains — and fills in a
@@ -400,6 +400,15 @@ v1.3.3  (2026-09-13)  — current
     as they arrived and Apple rejected the submission for them. The package's
     own VERSION constant, still 1.3.1 while setup.py said 1.3.2, was
     corrected.
+
+
+v1.4.0  (2026-09-13)  — current
+    Checks for a newer release, from an Updates… button beside Dismiss. It asks GitHub for
+    the newest published tag and reports what it finds, offering the releases
+    page and the `brew upgrade` line — it never downloads or replaces itself,
+    because a running bundle cannot safely overwrite its own files. Versions are
+    compared as integers, so 3.10.0 counts as newer than 3.9.0 rather than
+    older.
 
 
 -----------------------------------------------------------------------------

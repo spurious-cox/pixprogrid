@@ -59,6 +59,7 @@ from AppKit import (
 from Foundation import NSObject
 from PyObjCTools import AppHelper
 
+import pixpro_updates
 from pixprogrid import VERSION, ax, state
 from pixprogrid.pixelmator import PixelmatorError, Settings
 
@@ -203,6 +204,15 @@ class Controller(NSObject):
         )
         content.addSubview_(status)
 
+        updates = NSButton.alloc().initWithFrame_(
+            NSMakeRect(MARGIN, dismiss_y, 96, 32)
+        )
+        updates.setTitle_("Updates\u2026")
+        updates.setBezelStyle_(NSBezelStyleRounded)
+        updates.setTarget_(self)
+        updates.setAction_(b"checkForUpdates:")
+        content.addSubview_(updates)
+
         dismiss = NSButton.alloc().initWithFrame_(
             NSMakeRect(WIDTH - MARGIN - 90, dismiss_y, 90, 32)
         )
@@ -217,6 +227,11 @@ class Controller(NSObject):
         self.status = status
         panel.orderFrontRegardless()
         return panel
+
+    def checkForUpdates_(self, sender):
+        """Ask GitHub what the newest release is. Reports only — see the module."""
+        pixpro_updates.check_for_updates(
+            "PixProGrid", "pixprogrid", VERSION, NSApp.applicationIconImage())
 
     # ---- status --------------------------------------------------------
 
