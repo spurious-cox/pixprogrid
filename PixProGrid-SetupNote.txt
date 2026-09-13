@@ -1,0 +1,92 @@
+=============================================================================
+ PixProGrid — setup note
+=============================================================================
+
+Pixelmator Pro won't let some tools work with the grid switched off. This
+little app doesn't switch it off — it makes it invisible. One switch: on for
+clean screenshots, off to put your own settings back.
+
+While it's on, the grid is set to one line every 100% with a single
+subdivision, so the only gridlines land on the canvas edges, in light gray.
+It also turns off the transparency checkerboard, so transparent areas grab as
+flat light gray instead of a checker pattern.
+
+
+-----------------------------------------------------------------------------
+ BEFORE YOU START
+-----------------------------------------------------------------------------
+
+* An Apple-silicon Mac (M1 or later). It will NOT run on Intel.
+* macOS 13 or later.
+* Pixelmator Pro, running in English. The app finds Pixelmator's settings by
+  reading the labels in its Settings window, so a Pixelmator running in
+  another language won't work.
+
+
+-----------------------------------------------------------------------------
+ INSTALLING
+-----------------------------------------------------------------------------
+
+1. Drag PixProGrid.app into your Applications folder.
+
+2. The first time you open it, macOS will refuse and say it can't check the
+   app for malicious software.
+
+   That's expected. It's signed with a personal certificate rather than a
+   paid Apple developer one, and it isn't notarised — macOS treats anything
+   in that position the same way, whoever wrote it.
+
+   To get past it: open System Settings > Privacy & Security, scroll down to
+   the message about PixProGrid being blocked, and click "Open Anyway".
+
+   If you'd rather do it in Terminal, this does the same thing:
+
+       xattr -dr com.apple.quarantine /Applications/PixProGrid.app
+
+3. Open PixProGrid. The panel will say it's waiting for Accessibility access.
+
+   It changes Pixelmator's settings by driving Pixelmator's own Settings
+   window, which macOS won't let any app do without permission. Without this
+   the app can do nothing at all.
+
+   Go to System Settings > Privacy & Security > Accessibility, add or switch
+   on PixProGrid, then quit and reopen it.
+
+   It should now say "Ready."
+
+
+-----------------------------------------------------------------------------
+ USING IT
+-----------------------------------------------------------------------------
+
+Have Pixelmator Pro open, then flip the switch on.
+
+Give it about ten seconds. Pixelmator comes to the front, its Settings window
+opens and closes, and the status line under the switch tells you when it's
+finished. Wait for that line before you judge whether it worked — it is not
+instant.
+
+Flip the switch off, or click Dismiss, to put your own settings back. Both
+check that every setting actually returned before reporting success. Quitting
+restores them too.
+
+Ctrl-Option-Cmd-G flips the switch from whatever app you're in — but only
+while PixProGrid is already running. It won't launch it.
+
+
+-----------------------------------------------------------------------------
+ IF SOMETHING GOES WRONG
+-----------------------------------------------------------------------------
+
+Your settings are saved to disk BEFORE anything is changed. If the app is
+force-quit or the Mac restarts while the screenshot settings are applied, the
+next launch notices and puts your settings back on its own.
+
+If the status line reports that a setting wouldn't take, the switch stays on
+and your settings are still applied — try again, or click Dismiss. Nothing is
+lost either way.
+
+The app has no Dock icon and no menu bar. The panel is the app: closing it or
+clicking Dismiss quits it.
+
+=============================================================================
