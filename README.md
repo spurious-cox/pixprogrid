@@ -1,4 +1,4 @@
-# PixProGrid
+# PixProGrid 1.4.1
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
@@ -11,9 +11,6 @@ or install it with Homebrew:
 ```
 brew install --cask spurious-cox/tap/pixprogrid
 ```
-
-*1.4.1 is an icon change only — nothing else about the app has changed.*
-
 Requires Pixelmator Pro. Both the 3.x build and the Creator Studio build work;
 the app binds to whichever one is in front or has a document open.
 
