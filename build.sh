@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Build, sign and install PixProGrid.app — v1.4.0
+# Build, sign and install PixProGrid.app — v1.5.0
 #
 # Signing uses the Developer ID certificate (expires 2027-02-01), the identity
 # notarization accepts. A STABLE signing identity matters here because macOS ties the
@@ -50,6 +50,11 @@ sleep 1
 echo "==> building"
 rm -rf build dist
 ./venv/bin/python setup.py py2app >/dev/null
+
+# macOS 26+ draws an app that has only an .icns shrunk onto a plain plate.
+# The Icon Composer document compiles into Assets.car, which macOS 26+ uses
+# instead; the .icns from setup.py is still what macOS 13-25 show.
+~/bin/glass_icon dist/PixProGrid.app icon/AppIcon.icon
 
 echo "==> signing nested binaries with Developer ID ($SIGN_ID)"
 find dist/PixProGrid.app -type f -print0 | while IFS= read -r -d $'\0' f; do

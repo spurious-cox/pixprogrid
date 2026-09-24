@@ -1,4 +1,4 @@
-# PixProGrid 1.4.1
+# PixProGrid 1.4.2
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
