@@ -66,6 +66,13 @@ codesign --force --timestamp --options runtime \
     --entitlements "$HOME/My_Applications/_signing/pixpro.entitlements" --sign "$SIGN_ID" dist/PixProGrid.app
 codesign --verify --strict dist/PixProGrid.app
 
+# Installing is the default here and in every other project's build.sh.
+# --no-install builds without touching /Applications.
+if [[ "$1" == "--no-install" ]]; then
+    echo "==> --no-install: leaving /Applications alone"
+    exit 0
+fi
+
 echo "==> installing to /Applications"
 rm -rf /Applications/PixProGrid.app
 cp -R dist/PixProGrid.app /Applications/
