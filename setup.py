@@ -24,8 +24,8 @@ OPTIONS = {
         "CFBundleName": "PixProGrid",
         "CFBundleDisplayName": "PixProGrid",
         "CFBundleIdentifier": "com.timmccoy.pixprogrid",
-        "CFBundleShortVersionString": "1.4.2",
-        "CFBundleVersion": "1.4.2",
+        "CFBundleShortVersionString": "1.4.3",
+        "CFBundleVersion": "1.4.3",
         "LSMinimumSystemVersion": "13.0",
         "NSHighResolutionCapable": True,
         # A floating utility panel, not an app to switch to: no Dock icon and

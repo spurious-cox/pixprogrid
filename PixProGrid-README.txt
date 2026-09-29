@@ -24,7 +24,7 @@ is switched off and the transparency colour set to light gray, so
 transparent areas grab as flat light gray instead of a checker pattern.
 
 App:      /Applications/PixProGrid.app
-Source:   ~/My_Applications/PixProGrid/
+Source:   this repository
 Snapshot: ~/Library/Application Support/PixProGrid/snapshot.json
 Shortcut: Control-Option-Command-G  (from any app, while PixProGrid runs)
 
@@ -69,11 +69,8 @@ stable identity precisely to make this grant survive rebuilds; an ad-hoc
 signature would get a new checksum each build and drop the app out of the
 Accessibility list every time.
 
-That identity is the Apple Development certificate (renewed 2026-08-05).
-build.sh selects it by SHA-1 hash rather than by name, because the expired
-2023 certificate is still in the keychain under an identical name and signing
-by name can pick the dead one. It signs with --timestamp so the signature
-stays valid after the certificate expires on 2027-08-05.
+That identity is a Developer ID certificate, and the signature is
+timestamped so it stays valid after the certificate expires.
 
 The app has no Dock icon and no menu bar (LSUIElement). The panel IS the
 app: closing it or clicking Dismiss quits.
@@ -273,27 +270,20 @@ uitest.py                  End-to-end test that presses the app's own
                            switch and checks Pixelmator Pro afterwards.
 setup.py                   py2app configuration.
 build.sh                   Build, sign, install.
-icon/build_icon.py         Builds PixProGrid.icns from a source image.
+icon/                      The app icon (see icon/README.txt).
 
 
 -----------------------------------------------------------------------------
  REBUILDING
 -----------------------------------------------------------------------------
 
-    cd ~/My_Applications/PixProGrid
     ./build.sh
 
 build.sh restores any applied session, kills a running copy, builds with
-py2app, signs with the Apple Development certificate, and installs to
+py2app, signs with Developer ID, and installs to
 /Applications.
 
-To rebuild the icon from a different source image:
-
-    cd ~/My_Applications/PixProGrid/icon
-    ../venv/bin/python build_icon.py ~/Desktop/gridImage.jpg
-
-The source need not be square — it is scaled to fit and centred on a
-transparent canvas, so nothing is cropped or stretched.
+The icon is described in icon/README.txt.
 
 
 -----------------------------------------------------------------------------
@@ -380,7 +370,7 @@ v1.3.1  (2026-08-05)
 
 v1.3.2  (2026-08-10)
     The README ships inside the bundle (Contents/Resources) rather than being
-    read from ~/My_Applications, so the app carries its own documentation and
+    read from outside the app, so the app carries its own documentation and
     depends on no external path. Packaging only; no code changed.
 
 

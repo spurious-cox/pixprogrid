@@ -1,4 +1,4 @@
-# PixProGrid 1.4.2
+# PixProGrid 1.4.3
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
@@ -61,10 +61,8 @@ so. The snapshot is deleted only once the restore has succeeded.
 ./build.sh
 ```
 
-Signing uses a Developer ID certificate selected by SHA-1 hash and timestamped,
-which is what keeps macOS's Automation grant alive across rebuilds.
-`~/My_Applications/_signing/pixpro_release.sh all <App>` signs and notarizes;
-`pixpro_publish.sh <App>` wraps it in the DMG and updates the cask.
+The app is signed with a timestamped Developer ID certificate, which keeps
+macOS's Automation grant alive across rebuilds, then notarized and stapled.
 
 ## Problems or suggestions
 
