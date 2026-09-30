@@ -392,7 +392,7 @@ v1.3.3  (2026-09-13)
     corrected.
 
 
-v1.4.0  (2026-09-13)  — current
+v1.4.0  (2026-09-13)
     Checks for a newer release, from an Updates… button beside Dismiss. It asks GitHub for
     the newest published tag and reports what it finds, offering the releases
     page and the `brew upgrade` line — it never downloads or replaces itself,
@@ -407,3 +407,11 @@ v1.4.0  (2026-09-13)  — current
  Developed with the support of Claude (Anthropic) — design, code, and
  testing assistance for versions 1.0.0 through 1.3.1.
 =============================================================================
+
+
+v1.4.4  (2026-09-30)  — current
+    The Updates… button only checks for a newer release and returns. Before,
+    closing its result alert quit the app and put the user's own settings back,
+    because the alert was the only window AppKit counted when the panel (a
+    utility panel) was not. Only Dismiss, the panel's close button, and turning
+    the switch off now end the screenshot settings.
