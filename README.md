@@ -1,4 +1,4 @@
-# PixProGrid 1.4.4
+# PixProGrid 1.5.0
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
@@ -63,6 +63,16 @@ so. The snapshot is deleted only once the restore has succeeded.
 
 The app is signed with a timestamped Developer ID certificate, which keeps
 macOS's Automation grant alive across rebuilds, then notarized and stapled.
+
+## Updates
+
+When it opens, PixProGrid asks GitHub whether a newer release exists — at most
+once a day, giving up after three seconds — and says nothing if you are up to
+date or offline. If there is a newer one, it shows in the status line:
+
+    Update available: X.Y.Z  —  brew upgrade --cask pixprogrid
+
+It only ever reports: nothing is downloaded and nothing replaces itself.
 
 ## Problems or suggestions
 

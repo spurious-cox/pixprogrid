@@ -1,4 +1,4 @@
-"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.4.4
+"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.5.0
 
 Pixelmator Pro will not let some tools work with the grid switched off, so this
 does not switch it off. It sets the grid to one gridline every 100% with a
@@ -24,7 +24,7 @@ v1.2.0  writes are verified and retried, a failed restore keeps the switch
 v1.2.1  the panel centres on the true middle of the screen.
 v1.3.0  pane switches are waited for rather than timed, every setting is
         confirmed as it is written, and the status line wraps to two lines.
-v1.4.4  Updates only checks for a newer release and returns; it no longer quits
+v1.5.0  Updates only checks for a newer release and returns; it no longer quits
         the app and restores the settings. Only Dismiss, the panel's close
         button, and the switch turning off end the screenshot settings.
 """
@@ -229,6 +229,9 @@ class Controller(NSObject):
         self.switch = switch
         self.status = status
         panel.orderFrontRegardless()
+        # The same automatic check every PixPro app makes when it opens: once a
+        # day at most, silent unless there is a newer release.
+        pixpro_updates.announce("pixprogrid", VERSION, self.post)
         return panel
 
     def checkForUpdates_(self, sender):
