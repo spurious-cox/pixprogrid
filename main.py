@@ -1,4 +1,4 @@
-"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.5.0
+"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.5.6
 
 Pixelmator Pro will not let some tools work with the grid switched off, so this
 does not switch it off. It sets the grid to one gridline every 100% with a
@@ -24,6 +24,17 @@ v1.2.0  writes are verified and retried, a failed restore keeps the switch
 v1.2.1  the panel centres on the true middle of the screen.
 v1.3.0  pane switches are waited for rather than timed, every setting is
         confirmed as it is written, and the status line wraps to two lines.
+v1.5.6  README warns to always finish with Dismiss: repeated closures without it
+        can lose the original settings.
+v1.5.5  Works on Pixelmator Pro 3.8: its Workspace pane's window is titled
+        "Workspace Layout", which was not recognised, so Settings looked as
+        though it had failed to open.
+v1.5.4  The panel itself says so, within two seconds of launch and as Pixelmator Pro
+        is opened or quit, instead of only after the switch is flipped.
+v1.5.3  With no Pixelmator Pro open, the status says so plainly: "No version of
+        Pixelmator Pro is open."
+v1.5.2  Drives the ACTIVE Pixelmator Pro build, as before 1.5.1. Run with only
+        one Pixelmator Pro open: with both open it can act on the wrong one.
 v1.5.0  Updates only checks for a newer release and returns; it no longer quits
         the app and restores the settings. Only Dismiss, the panel's close
         button, and the switch turning off end the screenshot settings.
@@ -59,12 +70,12 @@ from AppKit import (
     NSWindowStyleMaskTitled,
     NSWindowStyleMaskUtilityWindow,
 )
-from Foundation import NSObject
+from Foundation import NSObject, NSTimer
 from PyObjCTools import AppHelper
 
 import pixpro_updates
 from pixprogrid import VERSION, ax, state
-from pixprogrid.pixelmator import PixelmatorError, Settings
+from pixprogrid.pixelmator import PixelmatorError, Settings, find_app
 
 WIDTH = 380.0
 MARGIN = 20.0
@@ -397,6 +408,27 @@ class Controller(NSObject):
         self.applied = False
         NSApp().terminate_(self)
 
+    # ---- availability --------------------------------------------------
+
+    def checkOpen_(self, _timer):
+        """Keep the status line honest about whether a Pixelmator Pro is open.
+
+        Only the two idle messages are replaced, so a result or an error from
+        an action is never overwritten.
+        """
+        if self.busy or self.applied:
+            return
+        shown = str(self.status.stringValue())
+        if shown not in ("Ready.", NONE_OPEN):
+            return
+        try:
+            find_app()
+            wanted = "Ready."
+        except PixelmatorError:
+            wanted = NONE_OPEN
+        if wanted != shown:
+            self.setStatus_(wanted)
+
     # ---- launch --------------------------------------------------------
 
     @objc.python_method
@@ -419,6 +451,9 @@ class Controller(NSObject):
         threading.Thread(target=work, daemon=True).start()
 
 
+NONE_OPEN = "No version of Pixelmator Pro is open. Open Pixelmator Pro first."
+
+
 def _app_name(snapshot):
     return (
         "Pixelmator Pro Creator Studio"
@@ -438,6 +473,9 @@ class AppDelegate(NSObject):
             return
         self.controller.install_hotkey()
         self.controller.recover()
+        self.controller.checkOpen_(None)
+        NSTimer.scheduledTimerWithTimeInterval_target_selector_userInfo_repeats_(
+            2.0, self.controller, b"checkOpen:", None, True)
 
     def applicationWillTerminate_(self, notification):
         # Last line of defence: Dismiss and the switch already restore, but a

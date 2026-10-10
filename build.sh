@@ -1,5 +1,5 @@
 #!/bin/zsh
-# Build, sign and install PixProGrid.app — v1.5.0
+# Build, sign and install PixProGrid.app — v1.5.6
 #
 # Signing uses the Developer ID certificate (expires 2027-02-01), the identity
 # notarization accepts. A STABLE signing identity matters here because macOS ties the

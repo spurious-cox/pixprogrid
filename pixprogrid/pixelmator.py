@@ -26,6 +26,19 @@ BUNDLE_IDS = ("com.apple.pixelmator", "com.pixelmatorteam.pixelmator.x")
 PANES = ("General", "Editing", "Rulers", "Workspace")
 COLORS_PANEL = "Colors"
 
+
+def pane_name(title):
+    """The pane a Settings window title stands for, or None.
+
+    The window is titled after the selected pane, but not always with its
+    toolbar label: Pixelmator Pro 3.8 titles the Workspace pane "Workspace
+    Layout". A title that starts with a pane's name is that pane.
+    """
+    for name in PANES:
+        if title == name or (title and str(title).startswith(name + " ")):
+            return name
+    return None
+
 # Menu titles differ by build and macOS version.
 SETTINGS_ITEMS = ("Settings…", "Preferences…")
 
@@ -58,7 +71,7 @@ def find_app():
         if app.bundleIdentifier() in BUNDLE_IDS
     ]
     if not matches:
-        raise PixelmatorError("Pixelmator Pro is not running.")
+        raise PixelmatorError("No version of Pixelmator Pro is open. Open Pixelmator Pro first.")
     for app in matches:
         if app.isActive():
             return app
@@ -128,7 +141,7 @@ class Settings:
                 time.sleep(0.15)
             if window is None:
                 raise PixelmatorError("Could not open Pixelmator Pro's Settings window.")
-        self._original_pane = ax.attr(window, ax.TITLE)
+        self._original_pane = pane_name(ax.attr(window, ax.TITLE))
         return self
 
     def __exit__(self, exc_type, exc, tb):
@@ -142,7 +155,7 @@ class Settings:
         if window is not None:
             if self._opened_settings:
                 _close(window)
-            elif self._original_pane and self._original_pane in PANES:
+            elif self._original_pane:
                 self.select_pane(self._original_pane)
         return False
 
@@ -161,7 +174,7 @@ class Settings:
     def _settings_window(self):
         """The Settings window, whose title is the name of the selected pane."""
         for window in ax.windows(self.element):
-            if ax.attr(window, ax.TITLE) in PANES:
+            if pane_name(ax.attr(window, ax.TITLE)):
                 return window
         return None
 
@@ -207,7 +220,7 @@ class Settings:
         if window is None:
             raise PixelmatorError("Pixelmator Pro's Settings window closed unexpectedly.")
 
-        if ax.attr(window, ax.TITLE) != name:
+        if pane_name(ax.attr(window, ax.TITLE)) != name:
             toolbar = next(
                 (k for k in ax.children(window) if ax.attr(k, ax.ROLE) == "AXToolbar"), None
             )
@@ -223,7 +236,7 @@ class Settings:
         marker = PANE_MARKERS.get(name, ())
         for _ in range(40):
             window = self._settings_window()
-            if window is not None and ax.attr(window, ax.TITLE) == name:
+            if window is not None and pane_name(ax.attr(window, ax.TITLE)) == name:
                 group = next(
                     (k for k in ax.children(window) if ax.attr(k, ax.ROLE) == "AXGroup"), None
                 )

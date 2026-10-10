@@ -1,4 +1,4 @@
-# PixProGrid 1.5.0
+# PixProGrid 1.5.6
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
@@ -12,7 +12,11 @@ or install it with Homebrew:
 brew install --cask spurious-cox/tap/pixprogrid
 ```
 Requires Pixelmator Pro. Both the 3.x build and the Creator Studio build work;
-the app binds to whichever one is in front or has a document open.
+the app binds to the active one. Run with only one Pixelmator Pro open at a
+time; with both open it can act on the wrong one.
+Always finish with Dismiss or the switch: quitting any other way can leave the
+edited values in Pixelmator Pro, and repeated closures without Dismiss can lose
+your original settings.
 
 ## Why it exists
 

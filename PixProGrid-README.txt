@@ -212,15 +212,24 @@ FINDING CONTROLS The Settings window's accessibility title is the name of
  BOTH PIXELMATOR BUILDS
 -----------------------------------------------------------------------------
 
-Two separate apps with separate preferences are installed on this Mac, and
-PixProGrid supports both:
+Pixelmator Pro 3.8 and Pixelmator Pro Creator Studio are separate apps with
+separate preferences. PixProGrid supports both:
 
-    com.apple.pixelmator             Pixelmator Pro Creator Studio 4.3
+    com.apple.pixelmator             Pixelmator Pro Creator Studio
     com.pixelmatorteam.pixelmator.x  Pixelmator Pro 3.8
 
-If both are running, the active one is used, so the app follows whichever
-Pixelmator you are actually working in. The snapshot records which build it
-came from, and the status line names it.
+Run with only ONE Pixelmator Pro open at a time. If both are running, the
+active one is used, and PixProGrid can act on the wrong one when you switch
+between them. With none open, the status line says so as soon as the panel
+appears, and keeps checking. The snapshot records which build it came from, and the status
+line names it.
+
+ALWAYS END WITH DISMISS (or the switch). Quitting PixProGrid any other way -
+force-quit, a crash, closing it while another app is changing the grid - can
+leave the edited values in Pixelmator Pro, and the next session then takes
+THOSE as your settings. Quit more than once without Dismiss and your original
+values can be lost for good. Before using it, keep a note of your own grid
+settings.
 
 
 -----------------------------------------------------------------------------
