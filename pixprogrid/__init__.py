@@ -1,3 +1,3 @@
 """PixProGrid — temporarily makes Pixelmator Pro's grid invisible for screenshots."""
 
-VERSION = "1.5.6"
+VERSION = "1.6.0"

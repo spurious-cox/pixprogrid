@@ -1,4 +1,4 @@
-# PixProGrid 1.5.6
+# PixProGrid 1.6.0
 
 Makes Pixelmator Pro's grid invisible without switching it off, so the canvas
 can be screen-grabbed cleanly while the tools that need a grid keep working.
@@ -35,8 +35,9 @@ on is the way around both.
    screenshot settings are applied; the status line reports what happened.
 3. Take the screen grab.
 4. Flip the switch **off** to put your settings back, or click **Dismiss** to
-   restore and quit. **⌃⌥⌘G** flips the switch from any app while PixProGrid
-   is running.
+   restore and quit. **⌃⌥⌘G** flips the switch while PixProGrid is running.
+   The switch, the shortcut and Dismiss only act while Pixelmator Pro is the
+   front app; otherwise they say so and change nothing.
 
 ## What the switch changes
 

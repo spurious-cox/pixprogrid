@@ -78,6 +78,26 @@ def find_app():
     return matches[0]
 
 
+def not_in_front():
+    """Why Pixelmator Pro cannot be driven right now, or None when it can.
+
+    Grid drives Pixelmator's Settings window and Colors panel through
+    Accessibility. With another app in front those clicks and keystrokes land
+    in the wrong place and corrupt settings, so a switch, hotkey or Dismiss
+    that needs Pixelmator waits until it is the frontmost application.
+    Returns ("none", message) when no Pixelmator Pro is open at all, and
+    ("behind", message) when one is open but not in front.
+    """
+    try:
+        app = find_app()
+    except PixelmatorError as error:
+        return ("none", str(error))
+    front = NSWorkspace.sharedWorkspace().frontmostApplication()
+    if front is not None and front.processIdentifier() == app.processIdentifier():
+        return None
+    return ("behind", "Pixelmator Pro is not the front app. Click its window first, then try again.")
+
+
 def _rgba(color_string):
     """Parse a colour well's AXValue, e.g. 'rgb 0.827451 0.827451 0.827451 1'."""
     if not color_string:

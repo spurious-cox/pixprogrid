@@ -26,7 +26,7 @@ transparent areas grab as flat light gray instead of a checker pattern.
 App:      /Applications/PixProGrid.app
 Source:   this repository
 Snapshot: ~/Library/Application Support/PixProGrid/snapshot.json
-Shortcut: Control-Option-Command-G  (from any app, while PixProGrid runs)
+Shortcut: Control-Option-Command-G  (while PixProGrid runs and Pixelmator Pro is in front)
 
 
 -----------------------------------------------------------------------------
@@ -45,8 +45,11 @@ Shortcut: Control-Option-Command-G  (from any app, while PixProGrid runs)
     3. Take the screen grab.
 
     4. Flip the switch OFF to put your own settings back, or click Dismiss
-       to restore and quit. Control-Option-Command-G flips the switch from
-       whatever app you are in, as long as PixProGrid is running.
+       to restore and quit. Control-Option-Command-G flips the switch while
+       PixProGrid is running. The switch, the shortcut and Dismiss only act
+       while Pixelmator Pro is the front app: with another app in front they
+       say so and change nothing, because driving Pixelmator from behind
+       another app corrupts its settings.
 
 USING IT, below, covers each control in detail.
 
@@ -122,7 +125,7 @@ CLOSE BOX     Same as Dismiss.
 
 QUIT          Restores before terminating, from any quit path.
 
-⌃⌥⌘G          Flips the switch from whatever app you are in. It does NOT
+⌃⌥⌘G          Flips the switch, but only while Pixelmator Pro is in front. It does NOT
               launch PixProGrid — the shortcut is a monitor installed by
               the running app, so it works only once PixProGrid is up.
               Launch it from /Applications first; the shortcut then works

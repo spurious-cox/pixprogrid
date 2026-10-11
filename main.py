@@ -1,4 +1,4 @@
-"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.5.6
+"""PixProGrid — a floating switch that hides Pixelmator Pro's grid — v1.6.0
 
 Pixelmator Pro will not let some tools work with the grid switched off, so this
 does not switch it off. It sets the grid to one gridline every 100% with a
@@ -24,6 +24,9 @@ v1.2.0  writes are verified and retried, a failed restore keeps the switch
 v1.2.1  the panel centres on the true middle of the screen.
 v1.3.0  pane switches are waited for rather than timed, every setting is
         confirmed as it is written, and the status line wraps to two lines.
+v1.6.0  A switch, the hotkey or Dismiss now does nothing unless Pixelmator Pro is
+        the front app, because driving it while another app is in front
+        corrupted settings. Dismiss still quits when no Pixelmator is open.
 v1.5.6  README warns to always finish with Dismiss: repeated closures without it
         can lose the original settings.
 v1.5.5  Works on Pixelmator Pro 3.8: its Workspace pane's window is titled
@@ -75,7 +78,7 @@ from PyObjCTools import AppHelper
 
 import pixpro_updates
 from pixprogrid import VERSION, ax, state
-from pixprogrid.pixelmator import PixelmatorError, Settings, find_app
+from pixprogrid.pixelmator import PixelmatorError, Settings, find_app, not_in_front
 
 WIDTH = 380.0
 MARGIN = 20.0
@@ -279,6 +282,12 @@ class Controller(NSObject):
     def toggled_(self, sender):
         if self.busy:
             return
+        problem = not_in_front()
+        if problem:
+            # Nothing is touched: the switch goes back to where it was.
+            self.switch.setState_(1 if self.applied else 0)
+            self.setStatus_(problem[1])
+            return
         wanted = bool(sender.state())
         self.busy = True
         self.switch.setEnabled_(False)
@@ -289,6 +298,16 @@ class Controller(NSObject):
         if self.busy:
             return
         if self.applied:
+            problem = not_in_front()
+            # Restoring drives Pixelmator, so it must be in front. With no
+            # Pixelmator open there is nothing to drive: quitting then leaves
+            # the snapshot, and the next launch puts the settings back.
+            if problem and problem[0] == "behind":
+                self.setStatus_(problem[1] + " Dismiss restores your settings in Pixelmator Pro.")
+                return
+            if problem:
+                NSApp().terminate_(self)
+                return
             self.busy = True
             self.switch.setEnabled_(False)
             self.setStatus_("Restoring your settings…")
